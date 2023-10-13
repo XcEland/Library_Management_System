@@ -10,8 +10,6 @@ public class Book{
         this.ISBN = ISBN;
         this.avalabilityStatus = avalabilityStatus;
     }
-
-
     
     //setters and getters
     public void setTitle(String title){

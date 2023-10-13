@@ -33,7 +33,9 @@ public class LibraryManagementApp {
                 case 3:
                     System.out.println("Enter ISBN:");
                     String ISBN = reader.nextLine();
+
                     Library.checkAvailability(ISBN);
+
                     break;
                 
                 case 4:
@@ -45,14 +47,25 @@ public class LibraryManagementApp {
                 case 5:
                     System.out.println("Enter ISBN:");
                     ISBN = reader.nextLine();
-                    //User.returnBook(ISBN);
+                    //returnBook();
                     break;
                 
                 case 6:
+                    User.addUser();
                     break;
-                
+                case 7:
+                    System.out.println("Enter id:");
+                    String id = reader.nextLine();
+                    User.checkUser(id);
+                    break;
+                case 8:
+                    User.removeUser();
+                    break;
+                case 9:
+                    System.out.println("Exiting...");
+                    break;
                 default:
-                    System.out.print("Wrong choice. Try again");
+                    System.out.print("Invalid choice. Try again");
                     break;
             }
         } while (choice!= 9);
