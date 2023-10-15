@@ -1,99 +1,127 @@
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Scanner;
 
 public class Library {
     static ArrayList<Book> bookCollection = new ArrayList<Book>();
     public static Scanner reader = new Scanner(System.in);
 
-    public static String addBook() {
+    public static void addBook() {
         System.out.println("Enter Book Type(A/C/S):");
         String bookType = reader.nextLine();
-
         System.out.println("Enter title:");
         String title = reader.nextLine();
-
         System.out.println("Enter author:");
         String author = reader.nextLine();
-
         System.out.println("Enter ISBN:");
         String ISBN = reader.nextLine();
 
-        String message = "";
-        // check if book is already in library
         boolean availabilityStatus = checkAvailability(ISBN);
+        Book book;
         if (availabilityStatus) {
-            message += "Book already added.";
-        } else {
-            // add book
-            availabilityStatus = true;
-            Book book;
-            if (bookType.equals("A")) {
+            if (bookType.equalsIgnoreCase("A")) {
                 book = new Art(title, author, ISBN, availabilityStatus);
-            } else if (bookType.equals("C")) {
+                System.out.println("Art Book added successfully");
+            } else if (bookType.equalsIgnoreCase("C")) {
                 book = new Commercial(title, author, ISBN, availabilityStatus);
-            } else if (bookType.equals("S")) {
+                System.out.println("Commercial Book added successfully");
+            } else if (bookType.equalsIgnoreCase("S")) {
                 book = new Science(title, author, ISBN, availabilityStatus);
+                System.out.println("Science Book added successfully");
             } else {
                 book = new Book(title, author, ISBN, availabilityStatus);
+                System.out.println("General Book added successfully");
             }
             bookCollection.add(book);
-            message += "Book added successfully.";
+            for (Book bk : bookCollection) {
+                System.out.print(bk.getISBN() + " " + bk.getTitle() + " " + bk.getAvalabilityStatus());
+            }
+        } else {
+            System.out.println("Book already added. Try another!");
         }
-        return message;
-
     }
 
-    public static String removeBook() {
+    public static void removeBook() {
         System.out.println("Enter ISBN:");
         String ISBN = reader.nextLine();
-        String message = "";
 
         // check if book is already in library
         boolean availabilityStatus = checkAvailability(ISBN);
-
-        if (availabilityStatus) {
-            for (Book book : bookCollection) {
+        if (!availabilityStatus) {
+            Iterator<Book> iterator = bookCollection.iterator();
+            while (iterator.hasNext()) {
+                Book book = iterator.next();
                 if (book.getISBN().equals(ISBN)) {
-                    bookCollection.remove(book);
-                    message += "Book removed succesfully";
+                    iterator.remove();
+                    System.out.println("Book removed successfully");
+                    for (Book bk : bookCollection) {
+                        System.out.print(bk.getISBN() + " " + bk.getTitle() + " " + bk.getAvalabilityStatus());
+                    }
                 }
             }
         } else {
-            message += "Book not found";
+            System.out.println("Book not found. Try another!");
         }
-        return message;
+
     }
 
     public static boolean checkAvailability(String ISBN) {
-        // check if its already in the collection
-        boolean bookAvailability = false;
-        if(bookCollection.size()>0){
+        // check if it's already in the collection
+        boolean bookAvailability = true; // by default its in the collection
+        if (!bookCollection.isEmpty()) {
             for (Book book : bookCollection) {
-            if (book.getISBN().equals(ISBN)) {
-                bookAvailability = true;
-            } else {
-                bookAvailability = false;
+                if (book.getISBN().equals(ISBN)) {
+                    bookAvailability = false;
+                    break; // Exit the loop once the book is found
+                }
             }
-        }
-        }else{
-            bookAvailability = false;
         }
         return bookAvailability;
     }
 
-    //check borrowed
-    public static boolean checkBorrowed(String ISBN){
+    // check borrowed
+    public static boolean checkBorrowed(String ISBN) {
         boolean borrowedFeedback = false;
-        for(Book book: bookCollection){
-            if(book.getISBN().equals(ISBN)){
-                if(book.getAvalabilityStatus()){
-                    borrowedFeedback = true;
-                }else{
+        for (Book book : bookCollection) {
+            if (book.getISBN().equals(ISBN)) {
+                if (book.getAvalabilityStatus()) { //available
+                    borrowedFeedback = true; //can be borrowed
+                } else {
                     borrowedFeedback = false;
                 }
             }
         }
         return borrowedFeedback;
+    }
+
+    public static void checkBook() {
+        System.out.println("Enter ISBN:");
+        String ISBN = reader.nextLine();
+        boolean checkLibrary = Library.checkAvailability(ISBN);
+        boolean checkBorrow = Library.checkBorrowed(ISBN);
+
+        //Book in libray
+        if(!checkLibrary){
+            // borrowed
+            for (Book bk : bookCollection) {
+                System.out.print("ISBN: "+ bk.getISBN() +" .Title: "+ bk.getTitle() +" .Availability Status: "+ bk.getAvalabilityStatus());
+            }
+            if(!checkBorrow){
+                //get the user who borrowed the book
+                for (Book bk : bookCollection) {
+                    for(User user: User.usersList){
+                        if(user.userBorrowedBooks.contains(bk)){
+                            System.out.println("Book is borrowed by" + user.getName());
+                        }
+                    }
+                }
+            }else{
+                System.out.println("Book is available for borrowing");
+            }
+        }else{
+            System.out.println("Book is not in Library. Add book");
+        }
+
     }
 
 }

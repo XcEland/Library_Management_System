@@ -1,10 +1,11 @@
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Scanner;
 
 abstract class User {
-    private String name;
-    private String id;
-    protected ArrayList<Book> userBorrowedBooks;
+    String name;
+    String id;
+    ArrayList<Book> userBorrowedBooks;
     static ArrayList<User> usersList = new ArrayList<>();
 
     int count;
@@ -17,7 +18,7 @@ abstract class User {
         this.userBorrowedBooks = new ArrayList<>();
     }
 
-    public static String addUser() {
+    public static void addUser() {
         System.out.println("Enter User Type(S/T):");
         String userType = reader.nextLine();
 
@@ -26,41 +27,39 @@ abstract class User {
 
         System.out.println("Enter id:");
         String id = reader.nextLine();
-        String message = "";
 
         // check user it already exists
         boolean userAvailabilityStatus = checkUser(id);
-
-        if (userAvailabilityStatus) {
-            message += "User already added.";
-        } else {
-            User user;
-            if (userType.equals("T")) {
+        User user;
+        if (!userAvailabilityStatus) {
+            if (userType.equalsIgnoreCase("T")) {
                 user = new Teacher(name, id);
                 usersList.add(user);
-                message += "Teacher added successfully.";
-            } else if (userType.equals("S")) {
+                System.out.println("Teacher added successfully.");
+            } else if (userType.equalsIgnoreCase("S")) {
                 user = new Student(name, id);
                 usersList.add(user);
-                message += "Student added successfully.";
+                System.out.println("Student added successfully.");
             }
+            for (User ur : usersList) {
+                System.out.print(ur.getId() + " " + ur.getName());
+            }
+        } else {
+            System.out.println("User already added. Try another!");
         }
-
-        return message;
     }
 
-    abstract String borrowBook();
+    // abstract static void borrowBook();
 
-    abstract String returnBook();
+    // abstract static void returnBook();
 
     // check user
     public static boolean checkUser(String id) {
-        boolean userAvailability = false;
+        boolean userAvailability = false; // default not in list
         for (User user : usersList) {
             if (user.getId().equals(id)) {
-                userAvailability = true;
-            } else {
-                userAvailability = false;
+                userAvailability = true; // user is in list
+                break;
             }
         }
         return userAvailability;
@@ -80,23 +79,26 @@ abstract class User {
     }
 
     // remove user
-    public static String removeUser() {
+    public static void removeUser() {
         System.out.println("Enter User id:");
         String userId = reader.nextLine();
-        String message = "";
 
         boolean userAvailabilityStatus = checkUser(userId);
         if (userAvailabilityStatus) {
-            for (User user : usersList) {
+            Iterator<User> iterator = usersList.iterator();
+            while (iterator.hasNext()) {
+                User user = iterator.next();
                 if (user.getId().equals(userId)) {
-                    usersList.remove(user);
-                    message = "User has been removed successfully";
-                } else {
-                    message = "User not found";
+                    iterator.remove();
+                    System.out.println("User has been removed successfully");
+                    for (User ur : usersList) {
+                        System.out.print(ur.getId() + " " + ur.getName());
+                    }
                 }
             }
+        } else {
+            System.out.println("User not found. Try another!");
         }
-        return message;
     }
 
     // display user information
@@ -121,9 +123,9 @@ abstract class User {
 
                 }
             }
-        }else{
-                System.out.println("No user found");
-            }
+        } else {
+            System.out.println("No user found");
+        }
     }
 
     // getters and setters

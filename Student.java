@@ -1,11 +1,11 @@
 public class Student extends User {
-    protected int maxCount = 5;
+    static int maxCount = 5;
 
     public Student(String name, String id) {
         super(name, id);
     }
 
-    public String borrowBook() {
+    public static void borrowBook() {
         // check user, book, count
         System.out.println("Enter id:");
         String id = reader.nextLine();
@@ -13,15 +13,14 @@ public class Student extends User {
         System.out.println("Enter ISBN:");
         String ISBN = reader.nextLine();
 
-        boolean userAvailabilityStatus = super.checkUser(id);
+        boolean userAvailabilityStatus = User.checkUser(id);
         boolean bookAvailabilityStatus = Library.checkBorrowed(ISBN);
-        int currentCount = super.checkNumberOfBooksBorrowed(id);
+        int currentCount = User.checkNumberOfBooksBorrowed(id);
 
         // check count of books borrowed
-        String message = "";
-        if (userAvailabilityStatus && !bookAvailabilityStatus) {
+        if (userAvailabilityStatus && bookAvailabilityStatus) {
             if (currentCount >= maxCount) {
-                message = "Maximum number of books to borrow reached!";
+                System.out.println("Maximum number of books to borrow reached!");
             } else {
                 for (Book book : Library.bookCollection) {
                     if (book.getISBN().equals(ISBN)) {
@@ -30,22 +29,27 @@ public class Student extends User {
                                 user.userBorrowedBooks.add(book);
                                 bookAvailabilityStatus = false;
                                 book.setAvalabilityStatus(bookAvailabilityStatus);
-                                message = "Book borrowed successfully";
+                                System.out.println("Book borrowed successfully");
                             } else {
-                                message = "user not found";
+                                System.out.println( "user not found");
                             }
                         }
                     } else {
-                        message = "Book not found";
+                        System.out.println( "Book not found");
                     }
                 }
             }
+        }else if(!userAvailabilityStatus){
+            System.out.println( "User not found");
+        }else if(!bookAvailabilityStatus){
+            System.out.println( "Book not found");
+        }else{
+            System.out.println( "Book and User not found");
         }
 
-        return message;
     }
 
-    public String returnBook() {
+    public static void returnBook() {
         // check user, book, count
         System.out.println("Enter id:");
         String id = reader.nextLine();
@@ -53,11 +57,10 @@ public class Student extends User {
         System.out.println("Enter ISBN:");
         String ISBN = reader.nextLine();
 
-        boolean userAvailabilityStatus = super.checkUser(id);
+        boolean userAvailabilityStatus = User.checkUser(id);
         boolean bookAvailabilityStatus = Library.checkBorrowed(ISBN);
 
         // check count of books borrowed
-        String message = "";
         if (userAvailabilityStatus && bookAvailabilityStatus) {
             for (Book book : Library.bookCollection) {
                 if (book.getISBN().equals(ISBN)) {
@@ -66,18 +69,17 @@ public class Student extends User {
                             user.userBorrowedBooks.remove(book);
                             bookAvailabilityStatus = true;
                             book.setAvalabilityStatus(bookAvailabilityStatus);
-                            message = "Book returned successfully";
+                            System.out.println("Book returned successfully");
                         } else {
-                            message = "user not found";
+                            System.out.println("user not found");
                         }
                     }
                 } else {
-                    message = "Book not found";
+                    System.out.println("Book not found");
                 }
             }
         }
 
-        return message;
     }
 
 }

@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class LibraryManagementApp {
+public class Main {
     public static Scanner reader = new Scanner(System.in);
     public static void main(String[] args){
         
@@ -31,32 +31,38 @@ public class LibraryManagementApp {
                     break;
                 
                 case 3:
-                    System.out.println("Enter ISBN:");
-                    String ISBN = reader.nextLine();
-
-                    Library.checkAvailability(ISBN);
-
+                    Library.checkBook();
                     break;
                 
                 case 4:
-                    System.out.println("Enter ISBN:");
-                    ISBN = reader.nextLine();
-                    //User.borrowBook();
+                    System.out.println("Enter user type (T/S):");
+                    reader.nextLine();
+                    String userType = reader.nextLine();
+                    if(userType.equalsIgnoreCase("T")){
+                        Teacher.borrowBook();
+                    }else if(userType.equalsIgnoreCase("S")){
+                        Student.borrowBook();
+                    }
                     break;
                 
                 case 5:
-                    System.out.println("Enter ISBN:");
-                    ISBN = reader.nextLine();
-                    //returnBook();
+                    System.out.println("Enter user type (T/S):");
+                    reader.nextLine();
+                    String Usertype = reader.nextLine();
+                    if(Usertype.equalsIgnoreCase("T")){
+                        Teacher.returnBook();
+                    }else if(Usertype.equalsIgnoreCase("S")){
+                        Student.returnBook();
+                    }
                     break;
                 
                 case 6:
                     User.addUser();
                     break;
                 case 7:
-                    System.out.println("Enter id:");
-                    String id = reader.nextLine();
-                    User.checkUser(id);
+                    // System.out.println("Enter id:");
+                    // String id = reader.nextLine();
+                    // User.checkUser(id);
                     break;
                 case 8:
                     User.removeUser();
