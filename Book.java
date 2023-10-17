@@ -31,13 +31,13 @@ public class Book implements Displayable {
     public static void returnBooks(String bookType) {
         for (Book book : Library.bookCollection) {
             if (book.getBookType().equals(bookType)) {
-                book.display(book.getTitle(), book.getAuthor(), book.getISBN(), book.getAvalabilityStatus());
+                book.toString(book.getTitle(), book.getAuthor(), book.getISBN(), book.getAvalabilityStatus());
             }
         }
     }
 
     @Override
-    public void display(String title, String author, String ISBN, boolean availabilityStatus) {
+    public void toString(String title, String author, String ISBN, boolean availabilityStatus) {
         System.out.println("All General Books in Library");
         System.out.println(" Title: " + title + ", Author: " + author + ", ISBN: " + ISBN
                 + ", Can Borrow: " + avalabilityStatus);

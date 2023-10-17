@@ -14,11 +14,10 @@ public class Main {
             System.out.println("4. Borrow Book");
             System.out.println("5. Return Book");
             System.out.println("6. Add User");
-            System.out.println("7. Check User");
+            System.out.println("7. Display User");
             System.out.println("8. Remove User");
             System.out.println("9. Display All Books");
-            System.out.println("10. Check User");
-            System.out.println("11. Exit");
+            System.out.println("10. Exit");
             System.out.println("------------------------");
             System.out.println("Enter your choice: ");
             choice = reader.nextInt();
@@ -57,9 +56,6 @@ public class Main {
                     Book.displayLibraryBooks();
                     break;
                 case 10:
-                    System.out.println("Exiting...");
-                    break;
-                case 11:
                     System.out.println("Exiting...");
                     break;
                 default:
