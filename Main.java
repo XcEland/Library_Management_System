@@ -16,7 +16,9 @@ public class Main {
             System.out.println("6. Add User");
             System.out.println("7. Check User");
             System.out.println("8. Remove User");
-            System.out.println("9. Exit");
+            System.out.println("9. Display All Books");
+            System.out.println("10. Check User");
+            System.out.println("11. Exit");
             System.out.println("------------------------");
             System.out.println("Enter your choice: ");
             choice = reader.nextInt();
@@ -35,45 +37,35 @@ public class Main {
                     break;
                 
                 case 4:
-                    System.out.println("Enter user type (T/S):");
-                    reader.nextLine();
-                    String userType = reader.nextLine();
-                    if(userType.equalsIgnoreCase("T")){
-                        Teacher.borrowBook();
-                    }else if(userType.equalsIgnoreCase("S")){
-                        Student.borrowBook();
-                    }
+                    User.userBorrowBook();
                     break;
                 
                 case 5:
-                    System.out.println("Enter user type (T/S):");
-                    reader.nextLine();
-                    String Usertype = reader.nextLine();
-                    if(Usertype.equalsIgnoreCase("T")){
-                        Teacher.returnBook();
-                    }else if(Usertype.equalsIgnoreCase("S")){
-                        Student.returnBook();
-                    }
+                    User.userReturnBook();
                     break;
                 
                 case 6:
                     User.addUser();
                     break;
                 case 7:
-                    // System.out.println("Enter id:");
-                    // String id = reader.nextLine();
-                    // User.checkUser(id);
+                    User.displayUser();
                     break;
                 case 8:
                     User.removeUser();
                     break;
                 case 9:
+                    Book.displayLibraryBooks();
+                    break;
+                case 10:
+                    System.out.println("Exiting...");
+                    break;
+                case 11:
                     System.out.println("Exiting...");
                     break;
                 default:
                     System.out.print("Invalid choice. Try again");
                     break;
             }
-        } while (choice!= 9);
+        } while (choice!= 11);
     }
 }

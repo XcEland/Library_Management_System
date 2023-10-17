@@ -20,16 +20,16 @@ public class Library {
         Book book;
         if (availabilityStatus) {
             if (bookType.equalsIgnoreCase("A")) {
-                book = new Art(title, author, ISBN, availabilityStatus);
+                book = new Art(bookType, title, author, ISBN, availabilityStatus);
                 System.out.println("Art Book added successfully");
             } else if (bookType.equalsIgnoreCase("C")) {
-                book = new Commercial(title, author, ISBN, availabilityStatus);
+                book = new Commercial(bookType, title, author, ISBN, availabilityStatus);
                 System.out.println("Commercial Book added successfully");
             } else if (bookType.equalsIgnoreCase("S")) {
-                book = new Science(title, author, ISBN, availabilityStatus);
+                book = new Science(bookType, title, author, ISBN, availabilityStatus);
                 System.out.println("Science Book added successfully");
             } else {
-                book = new Book(title, author, ISBN, availabilityStatus);
+                book = new Book(bookType, title, author, ISBN, availabilityStatus);
                 System.out.println("General Book added successfully");
             }
             bookCollection.add(book);

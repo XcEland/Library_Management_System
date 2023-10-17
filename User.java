@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Scanner;
 
-abstract class User {
+abstract class User implements Borrowable {
     String name;
     String id;
     ArrayList<Book> userBorrowedBooks;
@@ -49,11 +49,38 @@ abstract class User {
         }
     }
 
-    // abstract static void borrowBook();
+    public abstract void borrowBook(String userID);
 
-    // abstract static void returnBook();
+    public abstract void returnBook(String userID);
 
-    // check user
+    public static void userBorrowBook() {
+        System.out.println("Enter user id");
+        String userID = reader.nextLine();
+        for (User user: usersList){
+            if((user.getId().equals(userID))&&(user instanceof Teacher)){
+                user.borrowBook(userID);
+                break;
+            }else if((user.getId().equals(userID))&&(user instanceof Student)){
+                user.borrowBook(userID);
+                break;
+            }
+        }
+    }
+
+    public static void userReturnBook(){
+        System.out.println("Enter user id");
+        String userID = reader.nextLine();
+        for (User user: usersList){
+            if((user.getId().equals(userID))&&(user instanceof Teacher)){
+                user.returnBook(userID);
+                break;
+            }else if((user.getId().equals(userID))&&(user instanceof Student)){
+                user.returnBook(userID);
+                break;
+            }
+        }
+    }
+
     public static boolean checkUser(String id) {
         boolean userAvailability = false; // default not in list
         for (User user : usersList) {
@@ -65,7 +92,6 @@ abstract class User {
         return userAvailability;
     }
 
-    // check number of books
     public static int checkNumberOfBooksBorrowed(String id) {
         int feedBackCount = 0;
         for (User user : usersList) {
@@ -78,7 +104,6 @@ abstract class User {
         return feedBackCount;
     }
 
-    // remove user
     public static void removeUser() {
         System.out.println("Enter User id:");
         String userId = reader.nextLine();
@@ -101,11 +126,9 @@ abstract class User {
         }
     }
 
-    // display user information
     public static void displayUser() {
         System.out.println("Enter User id:");
         String userId = reader.nextLine();
-
         boolean userAvailabilityStatus = checkUser(userId);
         if (userAvailabilityStatus) {
             for (User user : usersList) {

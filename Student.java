@@ -5,10 +5,8 @@ public class Student extends User {
         super(name, id);
     }
 
-    public static void borrowBook() {
+    public void borrowBook(String id) {
         // check user, book, count
-        System.out.println("Enter id:");
-        String id = reader.nextLine();
 
         System.out.println("Enter ISBN:");
         String ISBN = reader.nextLine();
@@ -49,11 +47,7 @@ public class Student extends User {
 
     }
 
-    public static void returnBook() {
-        // check user, book, count
-        System.out.println("Enter id:");
-        String id = reader.nextLine();
-
+    public void returnBook(String id) {
         System.out.println("Enter ISBN:");
         String ISBN = reader.nextLine();
 
@@ -67,8 +61,7 @@ public class Student extends User {
                     for (User user : usersList) {
                         if (user.getId().equals(id)) {
                             user.userBorrowedBooks.remove(book);
-                            bookAvailabilityStatus = true;
-                            book.setAvalabilityStatus(bookAvailabilityStatus);
+                            book.setAvalabilityStatus(true);
                             System.out.println("Book returned successfully");
                         } else {
                             System.out.println("user not found");

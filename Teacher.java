@@ -5,11 +5,8 @@ public class Teacher extends User {
         super(name, id);
     }
 
-    public static void borrowBook() {
+    public void borrowBook(String id) {
         // check user, book, count
-        System.out.println("Enter id:");
-        String id = reader.nextLine();
-
         System.out.println("Enter ISBN:");
         String ISBN = reader.nextLine();
 
@@ -19,14 +16,14 @@ public class Teacher extends User {
 
         // check count of books borrowed
       
-        if (userAvailabilityStatus && !bookAvailabilityStatus) {
+        if (userAvailabilityStatus && bookAvailabilityStatus) {
             if (currentCount >= maxCount) {
                 System.out.println("Maximum number of books to borrow reached!");
             } else {
                 for (Book book : Library.bookCollection) {
                     if (book.getISBN().equals(ISBN)) {
                         for (User user : usersList) {
-                            if (user.getId().equals(id)) {
+                            if (user.getId().equals(id) && (user instanceof Teacher)) {
                                 user.userBorrowedBooks.add(book);
                                 bookAvailabilityStatus = false;
                                 book.setAvalabilityStatus(bookAvailabilityStatus);
@@ -40,15 +37,17 @@ public class Teacher extends User {
                     }
                 }
             }
+        }else if(!userAvailabilityStatus){
+            System.out.println( "User not found");
+        }else if(!bookAvailabilityStatus){
+            System.out.println( "Book not found");
+        }else{
+            System.out.println( "Book and User not found");
         }
-
-       
     }
 
-    public static void returnBook() {
+    public void returnBook(String id) {
         // check user, book, count
-        System.out.println("Enter id:");
-        String id = reader.nextLine();
 
         System.out.println("Enter ISBN:");
         String ISBN = reader.nextLine();
