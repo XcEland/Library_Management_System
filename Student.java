@@ -65,39 +65,43 @@ public class Student extends User {
     }
 
     public void returnBook(String id) {
-        System.out.println("Enter ISBN:");
-        String ISBN = null;
         try {
-            ISBN = reader.nextLine();
-        } catch (NoSuchElementException e) {
-            System.out.println("No input provided. Please try again.");
-            return; // Exit the method after handling the exception
-        }
-
-        boolean userAvailabilityStatus = User.checkUser(id);
-        boolean bookAvailabilityStatus = Library.checkBorrowed(ISBN);
-
-        // check count of books borrowed
-        if (userAvailabilityStatus && bookAvailabilityStatus) {
-            if (Library.bookCollection != null && usersList != null) {
-                for (Book book : Library.bookCollection) {
-                    if (book.getISBN().equals(ISBN)) {
-                        for (User user : usersList) {
-                            if (user.getId().equals(id)) {
-                                user.userBorrowedBooks.remove(book);
-                                book.setAvailabilityStatus(true);
-                                System.out.println("Book returned successfully");
-                            } else {
-                                System.out.println("user not found");
-                            }
-                        }
-                    } else {
-                        System.out.println("Book not found");
-                    }
-                }
-            } else {
-                System.out.println("Library data not available");
+            System.out.println("Enter ISBN:");
+            String ISBN = null;
+            try {
+                ISBN = reader.nextLine();
+            } catch (NoSuchElementException e) {
+                System.out.println("No input provided. Please try again.");
+                return; // Exit the method after handling the exception
             }
+
+            boolean userAvailabilityStatus = User.checkUser(id);
+            boolean bookAvailabilityStatus = Library.checkBorrowed(ISBN);
+
+            // check count of books borrowed
+            if (userAvailabilityStatus && bookAvailabilityStatus) {
+                if (Library.bookCollection != null && usersList != null) {
+                    for (Book book : Library.bookCollection) {
+                        if (book.getISBN().equals(ISBN)) {
+                            for (User user : usersList) {
+                                if (user.getId().equals(id)) {
+                                    user.userBorrowedBooks.remove(book);
+                                    book.setAvailabilityStatus(true);
+                                    System.out.println("Book returned successfully");
+                                } else {
+                                    System.out.println("user not found");
+                                }
+                            }
+                        } else {
+                            System.out.println("Book not found");
+                        }
+                    }
+                } else {
+                    System.out.println("Library data not available");
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("An error occurred: " + e.getMessage());
         }
     }
 }

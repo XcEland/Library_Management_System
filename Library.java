@@ -34,7 +34,7 @@ public class Library {
             }
             bookCollection.add(book);
             for (Book bk : bookCollection) {
-                System.out.print(bk.getISBN() + " " + bk.getTitle() + " " + bk.getAvalabilityStatus());
+                System.out.print(bk.getISBN() + " " + bk.getTitle() + " " + bk.getAvailabilityStatus());
             }
         } else {
             System.out.println("Book already added. Try another!");
@@ -55,7 +55,7 @@ public class Library {
                     iterator.remove();
                     System.out.println("Book removed successfully");
                     for (Book bk : bookCollection) {
-                        System.out.print(bk.getISBN() + " " + bk.getTitle() + " " + bk.getAvalabilityStatus());
+                        System.out.print(bk.getISBN() + " " + bk.getTitle() + " " + bk.getAvailabilityStatus());
                     }
                 }
             }
@@ -84,7 +84,7 @@ public class Library {
         boolean borrowedFeedback = false;
         for (Book book : bookCollection) {
             if (book.getISBN().equals(ISBN)) {
-                if (book.getAvalabilityStatus()) { //available
+                if (book.getAvailabilityStatus()) { //available
                     borrowedFeedback = true; //can be borrowed
                 } else {
                     borrowedFeedback = false;
@@ -104,7 +104,7 @@ public class Library {
         if(!checkLibrary){
             // borrowed
             for (Book bk : bookCollection) {
-                System.out.print("ISBN: "+ bk.getISBN() +" .Title: "+ bk.getTitle() +" .Availability Status: "+ bk.getAvalabilityStatus());
+                System.out.print("ISBN: "+ bk.getISBN() +" .Title: "+ bk.getTitle() +" .Availability Status: "+ bk.getAvailabilityStatus());
             }
             if(!checkBorrow){
                 //get the user who borrowed the book

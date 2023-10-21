@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 abstract class User implements Borrowable {
@@ -55,26 +56,36 @@ abstract class User implements Borrowable {
 
     public static void userBorrowBook() {
         System.out.println("Enter user id");
-        String userID = reader.nextLine();
-        for (User user: usersList){
-            if((user.getId().equals(userID))&&(user instanceof Teacher)){
-                user.borrowBook(userID);
-                break;
-            }else if((user.getId().equals(userID))&&(user instanceof Student)){
+        String userID;
+        try {
+            userID = reader.nextLine();
+        } catch (NoSuchElementException e) {
+            System.out.println("No input provided. Please try again.");
+            return; // Exit the method after handling the exception
+        }
+
+        boolean userFound = false;
+        for (User user : usersList) {
+            if (user.getId().equals(userID)) {
+                userFound = true;
                 user.borrowBook(userID);
                 break;
             }
         }
+
+        if (!userFound) {
+            System.out.println("User with ID " + userID + " not found.");
+        }
     }
 
-    public static void userReturnBook(){
+    public static void userReturnBook() {
         System.out.println("Enter user id");
         String userID = reader.nextLine();
-        for (User user: usersList){
-            if((user.getId().equals(userID))&&(user instanceof Teacher)){
+        for (User user : usersList) {
+            if ((user.getId().equals(userID)) && (user instanceof Teacher)) {
                 user.returnBook(userID);
                 break;
-            }else if((user.getId().equals(userID))&&(user instanceof Student)){
+            } else if ((user.getId().equals(userID)) && (user instanceof Student)) {
                 user.returnBook(userID);
                 break;
             }
@@ -140,7 +151,7 @@ abstract class User implements Borrowable {
                     for (Book book : user.userBorrowedBooks) {
                         int counter = 1;
                         System.out.println(counter + ". " + " ISBN: " + book.getISBN() + " Title: " + book.getTitle()
-                                + " Author: " + book.getAuthor() + " Status: " + book.getAvalabilityStatus());
+                                + " Author: " + book.getAuthor() + " Status: " + book.getAvailabilityStatus());
                         counter++;
                     }
 

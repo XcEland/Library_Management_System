@@ -5,15 +5,15 @@ public class Book implements Displayable {
     private String title;
     private String author;
     private String ISBN;
-    protected boolean avalabilityStatus;
+    protected boolean availabilityStatus;
     public static Scanner reader = new Scanner(System.in);
 
-    public Book(String bookType, String title, String author, String ISBN, boolean avalabilityStatus) {
+    public Book(String bookType, String title, String author, String ISBN, boolean availabilityStatus) {
         this.bookType = bookType;
         this.title = title;
         this.author = author;
         this.ISBN = ISBN;
-        this.avalabilityStatus = avalabilityStatus;
+        this.availabilityStatus = availabilityStatus;
     }
 
     public static void displayLibraryBooks() {
@@ -29,10 +29,27 @@ public class Book implements Displayable {
     }
 
     public static void returnBooks(String bookType) {
+        if (Library.bookCollection == null) {
+            System.out.println("No books available in the library");
+            return;
+        }
+
+        if (Library.bookCollection.isEmpty()) {
+            System.out.println("No books of any type available in the library");
+            return;
+        }
+
+        boolean foundMatchingBooks = false;
+
         for (Book book : Library.bookCollection) {
             if (book.getBookType().equals(bookType)) {
-                book.toString(book.getTitle(), book.getAuthor(), book.getISBN(), book.getAvalabilityStatus());
+                foundMatchingBooks = true;
+                book.toString(book.getTitle(), book.getAuthor(), book.getISBN(), book.getAvailabilityStatus());
             }
+        }
+
+        if (!foundMatchingBooks) {
+            System.out.println("No books of type " + bookType + " found in the library");
         }
     }
 
@@ -40,7 +57,7 @@ public class Book implements Displayable {
     public void toString(String title, String author, String ISBN, boolean availabilityStatus) {
         System.out.println("All General Books in Library");
         System.out.println(" Title: " + title + ", Author: " + author + ", ISBN: " + ISBN
-                + ", Can Borrow: " + avalabilityStatus);
+                + ", Can Borrow: " + availabilityStatus);
 
     }
 
@@ -57,8 +74,8 @@ public class Book implements Displayable {
         this.ISBN = ISBN;
     }
 
-    public void setAvailabilityStatus(boolean avalabilityStatus) {
-        this.avalabilityStatus = avalabilityStatus;
+    public void setAvailabilityStatus(boolean availabilityStatus) {
+        this.availabilityStatus = availabilityStatus;
     }
 
     public String getTitle() {
@@ -73,8 +90,8 @@ public class Book implements Displayable {
         return ISBN;
     }
 
-    public boolean getAvalabilityStatus() {
-        return avalabilityStatus;
+    public boolean getAvailabilityStatus() {
+        return availabilityStatus;
     }
 
     public String getBookType() {
@@ -86,7 +103,7 @@ public class Book implements Displayable {
     }
 
     public boolean isAvalabilityStatus() {
-        return avalabilityStatus;
+        return availabilityStatus;
     }
 
 }

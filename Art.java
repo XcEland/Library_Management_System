@@ -7,7 +7,7 @@ public class Art extends Book {
     public void toString(String title, String author, String ISBN, boolean availabilityStatus) {
         System.out.println("All Art Books in Library");
         System.out.println(" Title: " + title + ", Author: " + author + ", ISBN: " + ISBN
-                + ", Can Borrow: " + avalabilityStatus);
+                + ", Can Borrow: " + availabilityStatus);
     }
 
 }

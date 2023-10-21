@@ -1,3 +1,4 @@
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class Main {
@@ -22,10 +23,21 @@ public class Main {
             System.out.println("------------------------");
             System.out.println("Enter your choice: ");
 
-            if (reader.hasNextInt()) {
-                choice = reader.nextInt();
-                reader.nextLine(); // Consume the newline character
-            } else {
+            try {
+                if (reader.hasNextInt()) {
+                    choice = reader.nextInt();
+                    reader.nextLine(); // Consume the newline character
+
+                    if (choice < 1 || choice > 10) {
+                        System.out.println("Invalid choice. Please enter a number between 1 and 10.");
+                        continue;
+                    }
+                } else {
+                    System.out.println("Invalid input. Please enter a valid integer choice.");
+                    reader.nextLine(); // Consume the invalid input
+                    continue;
+                }
+            } catch (NoSuchElementException e) {
                 System.out.println("Invalid input. Please enter a valid integer choice.");
                 reader.nextLine(); // Consume the invalid input
                 continue;
