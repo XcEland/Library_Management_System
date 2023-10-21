@@ -1,3 +1,3 @@
 public interface Displayable {
-    void toString(String titlr, String author, String ISBN, boolean availabilityStatus);
+    void toString(String title, String author, String ISBN, boolean availabilityStatus);
 }

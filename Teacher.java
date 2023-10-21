@@ -1,7 +1,7 @@
 public class Teacher extends User {
-    static int maxCount = 10;
+    final static int maxCount = 10;
 
-    public Teacher(String name, String id){
+    public Teacher(String name, String id) {
         super(name, id);
     }
 
@@ -15,7 +15,7 @@ public class Teacher extends User {
         int currentCount = User.checkNumberOfBooksBorrowed(id);
 
         // check count of books borrowed
-      
+
         if (userAvailabilityStatus && bookAvailabilityStatus) {
             if (currentCount >= maxCount) {
                 System.out.println("Maximum number of books to borrow reached!");
@@ -26,7 +26,7 @@ public class Teacher extends User {
                             if (user.getId().equals(id) && (user instanceof Teacher)) {
                                 user.userBorrowedBooks.add(book);
                                 bookAvailabilityStatus = false;
-                                book.setAvalabilityStatus(bookAvailabilityStatus);
+                                book.setAvailabilityStatus(bookAvailabilityStatus);
                                 System.out.println("Book borrowed successfully");
                             } else {
                                 System.out.println("user not found");
@@ -37,12 +37,12 @@ public class Teacher extends User {
                     }
                 }
             }
-        }else if(!userAvailabilityStatus){
-            System.out.println( "User not found");
-        }else if(!bookAvailabilityStatus){
-            System.out.println( "Book not found");
-        }else{
-            System.out.println( "Book and User not found");
+        } else if (!userAvailabilityStatus) {
+            System.out.println("User not found");
+        } else if (!bookAvailabilityStatus) {
+            System.out.println("Book not found");
+        } else {
+            System.out.println("Book and User not found");
         }
     }
 
@@ -63,7 +63,7 @@ public class Teacher extends User {
                         if (user.getId().equals(id)) {
                             user.userBorrowedBooks.remove(book);
                             bookAvailabilityStatus = true;
-                            book.setAvalabilityStatus(bookAvailabilityStatus);
+                            book.setAvailabilityStatus(bookAvailabilityStatus);
                             System.out.println("Book returned successfully");
                         } else {
                             System.out.println("user not found");
@@ -77,4 +77,3 @@ public class Teacher extends User {
 
     }
 }
-

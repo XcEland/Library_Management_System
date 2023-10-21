@@ -57,7 +57,7 @@ public class Book implements Displayable {
         this.ISBN = ISBN;
     }
 
-    public void setAvalabilityStatus(boolean avalabilityStatus) {
+    public void setAvailabilityStatus(boolean avalabilityStatus) {
         this.avalabilityStatus = avalabilityStatus;
     }
 

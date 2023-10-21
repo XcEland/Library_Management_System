@@ -100,7 +100,7 @@ public class Library {
         boolean checkLibrary = Library.checkAvailability(ISBN);
         boolean checkBorrow = Library.checkBorrowed(ISBN);
 
-        //Book in libray
+        //Book in library
         if(!checkLibrary){
             // borrowed
             for (Book bk : bookCollection) {
